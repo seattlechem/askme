@@ -1,8 +1,8 @@
 """Rest Api views."""
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from rectotext import rec_to_text
-from search import find
+from .rectotext import rec_to_text
+from .search import find
 
 
 class AskViewApi(APIView):
