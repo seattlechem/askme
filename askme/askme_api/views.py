@@ -1,7 +1,7 @@
 """Rest Api views."""
 from rest_framework.views import APIView
 from rest_framework.response import Response
-
+from rectotext import rec_to_text
 
 class AskViewApi(APIView):
     """Using apiview."""
@@ -12,9 +12,9 @@ class AskViewApi(APIView):
 
     def post(self, request):
         """Upload audio file."""
-
-        customHeader = request.META['HTTP_MYCUSTOMHEADER']
+        # customHeader = request.META['HTTP_MYCUSTOMHEADER']
         uploadedFile = open("file.wav", "wb")
         uploadedFile.write(request.body)
         uploadedFile.close()
+
         return HttpResponse(escape(repr(request)))
