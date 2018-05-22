@@ -8,15 +8,14 @@ from .search import find
 class AskViewApi(APIView):
     """Using apiview."""
 
-    def get(self, request):
-        """Get request."""
-        return Response()
-
     def post(self, request):
         """Upload audio file."""
-        uploadedFile = open("file.wav", "wb")
-        uploadedFile.write(request.body)
+        uploadedFile = open("askme_api/assets/file.wav", "wb")
+        # import pdb; pdb.set_trace()
+        f = request.FILES['file']
+        uploadedFile.write(f.read())
         uploadedFile.close()
         question = rec_to_text()
         answer = find(question)
+        import pdb; pdb.set_trace()
         return {'answer': answer}
