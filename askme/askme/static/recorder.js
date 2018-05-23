@@ -30,80 +30,84 @@ function setup(){
 
 
 function startrecord(){
-		audio.src= beep
-		playing = "beep";
-		audio.play();
-		draw('#00ffff');
-		recording = true;
-        leftchannel.length = rightchannel.length = 0;
-        recordingLength = 0;
+  audio.src= beep
+  playing = "beep";
+  audio.play();
+  draw('#00ffff');
+  recording = true;
+  leftchannel.length = rightchannel.length = 0;
+  recordingLength = 0;
 } 
 
 function stoprecord(){
-		recording = false;
-        draw('blue');
-        var leftBuffer = mergeBuffers ( leftchannel, recordingLength );
-        var rightBuffer = mergeBuffers ( rightchannel, recordingLength );
-        var interleaved = interleave ( leftBuffer, rightBuffer );
-        
-        var buffer = new ArrayBuffer(44 + interleaved.length * 2);
-        var view = new DataView(buffer);
-        
-        writeUTFBytes(view, 0, 'RIFF');
-        view.setUint32(4, 44 + interleaved.length * 2, true);
-        writeUTFBytes(view, 8, 'WAVE');
-        writeUTFBytes(view, 12, 'fmt ');
-        view.setUint32(16, 16, true);
-        view.setUint16(20, 1, true);
-        view.setUint16(22, 2, true);
-        view.setUint32(24, sampleRate, true);
-        view.setUint32(28, sampleRate * 4, true);
-        view.setUint16(32, 4, true);
-        view.setUint16(34, 16, true);
-        writeUTFBytes(view, 36, 'data');
-        view.setUint32(40, interleaved.length * 2, true);
-        
-        var lng = interleaved.length;
-        var index = 44;
-        var volume = 1;
-        for (var i = 0; i < lng; i++){
-            view.setInt16(index, interleaved[i] * (0x7FFF * volume), true);
+  recording = false;
+      draw('blue');
+      var leftBuffer = mergeBuffers ( leftchannel, recordingLength
+);
+      var rightBuffer = mergeBuffers ( rightchannel,
+    recordingLength );
+      var interleaved = interleave ( leftBuffer, rightBuffer );
+      
+      var buffer = new ArrayBuffer(44 + interleaved.length * 2);
+      var view = new DataView(buffer);
+      
+      writeUTFBytes(view, 0, 'RIFF');
+      view.setUint32(4, 44 + interleaved.length * 2, true);
+      writeUTFBytes(view, 8, 'WAVE');
+      writeUTFBytes(view, 12, 'fmt ');
+      view.setUint32(16, 16, true);
+      view.setUint16(20, 1, true);
+      view.setUint16(22, 2, true);
+      view.setUint32(24, sampleRate, true);
+      view.setUint32(28, sampleRate * 4, true);
+      view.setUint16(32, 4, true);
+      view.setUint16(34, 16, true);
+      writeUTFBytes(view, 36, 'data');
+      view.setUint32(40, interleaved.length * 2, true);
+      
+      var lng = interleaved.length;
+      var index = 44;
+      var volume = 1;
+      for (var i = 0; i < lng; i++){
+              view.setInt16(index, interleaved[i] * (0x7FFF * volume),
+    true);
             index += 2;
+    }
+      
+    var blob = new Blob ( [ view ], { type : 'audio/wav' } );
+    var fd = new FormData();
+    fd.append('fname', 'audio.wav');
+    fd.append('data', blob);
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', '/audio', true);
+    console.log(xhr);
+    xhr.responseType = 'blob';
+    console.log('begin to send');
+    xhr.onload = function(evt) {
+        if (xhr.status == 200){
+            console.log(xhr);
+            var blob = new Blob([xhr.response], {type: 'audio/wav'});
+            var objectUrl = URL.createObjectURL(blob);
+            audio.addEventListener('ended',function(){
+                if (playing == 'response'){
+                draw('white');
+                }
+                playing = null;
+            });
+            audio.src = objectUrl;
+            audio.onload = function(evt) {
+            URL.revokeObjectUrl(objectUrl);
+            };
+            draw('#00ff00');
+            audio.play();
+            playing = "response";
         }
-        
-        var blob = new Blob ( [ view ], { type : 'audio/wav' } );
-		var fd = new FormData();
-		fd.append('fname', 'audio.wav');
-		fd.append('data', blob);
-	    var xhr = new XMLHttpRequest();
-        xhr.open('POST', '/audio', true);
-        console.log(xhr);
-        xhr.responseType = 'blob';
-        console.log('begin to send');
-        xhr.onload = function(evt) {
-            if (xhr.status == 200){
-                var blob = new Blob([xhr.response], {type: 'audio/wav'});
-                var objectUrl = URL.createObjectURL(blob);
-                audio.addEventListener('ended',function(){
-                    if (playing == 'response'){
-                    draw('white');
-                    }
-                    playing = null;
-                });
-                audio.src = objectUrl;
-                audio.onload = function(evt) {
-                URL.revokeObjectUrl(objectUrl);
-                };
-                draw('#00ff00');
-                audio.play();
-                playing = "response";
-            }
-            else{
-                draw('red');
-                window.setTimeout(draw, 750, 'white');
-            }
-        };
-        xhr.send(fd);
+        else{
+            draw('red');
+            window.setTimeout(draw, 750, 'white');
+        }
+    };
+    xhr.send(fd);
     }
 
 function interleave(leftChannel, rightChannel){
