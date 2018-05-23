@@ -55,11 +55,11 @@
     #     app_path: /home/ubuntu/askme/askme
     #     virtualenv: /home/ubuntu/ENV
 
-    # - name: collect static
-    #   django_manage:
-    #     command: collectstatic
-    #     app_path: /home/ubuntu/askme/askme
-    #     virtualenv: /home/ubuntu/ENV
+    - name: collect static
+      django_manage:
+        command: collectstatic
+        app_path: /home/ubuntu/askme/askme
+        virtualenv: /home/ubuntu/ENV
 
     - name: Install Gunicorn into Virtual Environment
       pip: 
