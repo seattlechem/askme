@@ -1,4 +1,4 @@
-// variables
+'use strict';// variables''
 var leftchannel = [];
 var rightchannel = [];
 var recorder = null;
@@ -76,36 +76,34 @@ function stoprecord(){
 		fd.append('fname', 'audio.wav');
 		fd.append('data', blob);
 	    var xhr = new XMLHttpRequest();
-	    xhr.open('POST', '/audio', true);
-		xhr.responseType = 'blob';
-		    xhr.onload = function(evt) {
-				if (xhr.status == 200){
-	  		      var blob = new Blob([xhr.response], {type: 'audio/wav'});
-	  		      var objectUrl = URL.createObjectURL(blob);
-	  			  audio.addEventListener('ended',function(){
-					  if (playing == 'response'){
-					  	draw('white');
-					  }
-					  playing = null;
-	  			  });
-	  		      audio.src = objectUrl;
-	  		      audio.onload = function(evt) {
-	  		        URL.revokeObjectUrl(objectUrl);
-	  		      };
-	  			  draw('#00ff00');
-	  		      audio.play();
-				  playing = "response";
-				}
-				else{
-					draw('red');
-					window.setTimeout(draw, 750, 'white');
-				}
-					
-				
-		      
-		    };
-		xhr.send(fd);
-		
+        xhr.open('POST', '/audio', true);
+        console.log(xhr);
+        xhr.responseType = 'blob';
+        console.log('begin to send');
+        xhr.onload = function(evt) {
+            if (xhr.status == 200){
+                var blob = new Blob([xhr.response], {type: 'audio/wav'});
+                var objectUrl = URL.createObjectURL(blob);
+                audio.addEventListener('ended',function(){
+                    if (playing == 'response'){
+                    draw('white');
+                    }
+                    playing = null;
+                });
+                audio.src = objectUrl;
+                audio.onload = function(evt) {
+                URL.revokeObjectUrl(objectUrl);
+                };
+                draw('#00ff00');
+                audio.play();
+                playing = "response";
+            }
+            else{
+                draw('red');
+                window.setTimeout(draw, 750, 'white');
+            }
+        };
+        xhr.send(fd);
     }
 
 function interleave(leftChannel, rightChannel){

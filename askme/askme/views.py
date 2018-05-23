@@ -1,7 +1,10 @@
 from django.shortcuts import render
-from askme_api.rectotext import rec_to_text
+from django.http import HttpResponse
+from .rectotext import rec_to_text
 from askme_api.search import find
 from django.views.decorators.csrf import csrf_exempt
+import json
+
 
 
 
@@ -16,7 +19,7 @@ def home_view(request):
 
 @csrf_exempt
 def save_view(request):
-    import pdb; pdb.set_trace()
+    # import pdb; pdb.set_trace()
     uploadedFile = open("askme/assets/file.wav", "wb")
     f = request.FILES['data']
     uploadedFile.write(f.read())
@@ -24,5 +27,4 @@ def save_view(request):
     question = rec_to_text()
     answer = find(question)
     print(answer)
-    return {answer}
-    
+    return HttpResponse(json.dumps({'answer': answer}), content_type="application/json")

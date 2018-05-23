@@ -5,8 +5,8 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 		<meta name="viewport" content="width=device-width,initial-scale=1">
     <title>Audio Recorder</title>
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     {% load staticfiles %}
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 		<script src="{% static "recorder.js" %}"></script>
     <style>
       html, body {
@@ -59,12 +59,12 @@
       <canvas id="myCanvas"></canvas>
       </div>
       <audio id="AudioElement"></audio>
-      <div id='logout' class="notSelectable">
+      {% comment %} <div id='logout' class="notSelectable">
         <a href="/logout">&#9746</a>
       </div>
       <div id='help' class="notSelectable">
         <a href="/static/help.html">Help</a>
-      </div>
+      </div> {% endcomment %}
       <script>
       var c=document.getElementById("myCanvas");
       var ctx=c.getContext("2d");
