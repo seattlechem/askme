@@ -27,8 +27,8 @@
 
     - name: clone repo here
       git:
-        repo: 'https://github.com/andriiglukhyi/django-mercedes.git'
-        dest: /home/ubuntu/django-mercedes
+        repo: 'https://github.com/seattlechem/askme.git'
+        dest: /home/ubuntu/askme
         clone: yes
         update: yes
 
@@ -44,21 +44,21 @@
 
     - name: Install the requirements
       pip:
-        requirements: /home/ubuntu/django-mercedes/requirements.txt
+        requirements: /home/ubuntu/askme/requirements.txt
         virtualenv: /home/ubuntu/ENV
       become: yes
       become_method: sudo
 
-    - name: Migrate the database
-      django_manage:
-        command: migrate
-        app_path: /home/ubuntu/django-mercedes/mercedes
-        virtualenv: /home/ubuntu/ENV
+    # - name: Migrate the database
+    #   django_manage:
+    #     command: migrate
+    #     app_path: /home/ubuntu/askme/askme
+    #     virtualenv: /home/ubuntu/ENV
 
     # - name: collect static
     #   django_manage:
     #     command: collectstatic
-    #     app_path: /home/ubuntu/django-mercedes/mercedes
+    #     app_path: /home/ubuntu/askme/askme
     #     virtualenv: /home/ubuntu/ENV
 
     - name: Install Gunicorn into Virtual Environment
