@@ -1,5 +1,5 @@
 [Unit]
-Description=gunicorn daemon for mercedes
+Description=gunicorn daemon for askme
 After=network.target
 
 [Service]
