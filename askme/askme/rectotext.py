@@ -1,4 +1,5 @@
 import os
+from .settings import BASE_DIR
 import speech_recognition as sr
 
 
