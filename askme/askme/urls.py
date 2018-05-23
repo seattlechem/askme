@@ -27,3 +27,6 @@ urlpatterns = [
     path('', home_view, name='home'),
     path('audio', save_view, name='save'),
 ]
+
+if settings.DEBUG:  # pragma: no cover
+    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
