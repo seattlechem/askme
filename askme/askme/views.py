@@ -26,7 +26,7 @@ def save_view(request):
     answer = find(question)
     tts = gTTS(text=answer, lang='en')
     tts.save("askme/assets/good.mp3")
-    os.system("mpg321 good.mp3")
+    # os.system("mpg321 good.mp3")
     fname = "askme/assets/good.mp3"
     f = open(fname, "rb") 
     response = HttpResponse()
