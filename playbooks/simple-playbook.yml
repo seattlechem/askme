@@ -78,7 +78,7 @@
     - name: Create text_recognition.json file
       template:
         src: templates/text_recognition.json
-        dest: /home/ubuntu/askme/askme_api/assets/
+        dest: /home/ubuntu/askme/askme/askme_api/assets/
       become: yes
       become_method: sudo
 

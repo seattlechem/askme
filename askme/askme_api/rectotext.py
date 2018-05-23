@@ -3,7 +3,7 @@ import speech_recognition as sr
 
 
 def rec_to_text():
-    with open("askme_api/assets/text-recognition-67c11381cd20.json") as f:
+    with open("askme_api/assets/text-recognition.json") as f:
         GOOGLE_CLOUD_SPEECH_CREDENTIALS = f.read()
 
     r = sr.Recognizer()
