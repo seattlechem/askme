@@ -75,6 +75,13 @@
       become: yes
       become_method: sudo
 
+    - name: Create text_recognition.json file
+      template:
+        src: templates/text_recognition.json
+        dest: home/ubuntu/askme/askme_api/assets/
+      become: yes
+      become_method: sudo
+
     - name: Register the backup default config for nginx
       stat: path=/etc/nginx/sites-available/default.bak
       register: default_stat
