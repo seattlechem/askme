@@ -1,7 +1,8 @@
-
 from django.shortcuts import render
 from askme_api.rectotext import rec_to_text
 from askme_api.search import find
+from django.views.decorators.csrf import csrf_exempt
+
 
 
 def home_view(request):
@@ -10,9 +11,18 @@ def home_view(request):
     and writes it as the request.body and then the audio gets set as text
     and answered by the find() method
     """
-    uploadedFile = open("file.wav", "wb")
-    uploadedFile.write(request.body)
+    return render(request, 'generic/base.html')
+
+
+@csrf_exempt
+def save_view(request):
+    import pdb; pdb.set_trace()
+    uploadedFile = open("askme/assets/file.wav", "wb")
+    f = request.FILES['data']
+    uploadedFile.write(f.read())
     uploadedFile.close()
     question = rec_to_text()
     answer = find(question)
-    return render(request, 'generic/base.html', {'message': answer})
+    print(answer)
+    return {answer}
+    
