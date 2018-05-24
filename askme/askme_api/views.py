@@ -3,7 +3,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from .rectotext import rec_to_text
 from .search import find
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.utils.decorators import method_decorator
 from gtts import gTTS
@@ -22,10 +22,10 @@ class AskViewApi(APIView):
             uploadedFile.close()
             question = rec_to_text()
             answer = find(question)
-            return {'answer': answer}
         except KeyError:
-            answer = "Sorry we have some connection problems. I didn't catch your request"
-            return {'answer': answer}
+            answer = "Sorry we have some connection problems.\
+ I didn't catch your request"
+        return JsonResponse({'answer': answer})
 
 
 @method_decorator(csrf_exempt, name='dispatch')
@@ -51,7 +51,8 @@ class AudioViewApi(APIView):
             response['Content-Length'] = os.path.getsize(fname)
             return response
         except KeyError:
-            answer = 'I am sorry. We have some connection issue. I couldn\'t get get Your file'
+            answer = 'I am sorry. We have some connection issue.\
+            I couldn\'t get get Your file'
             tts = gTTS(text=answer, lang='en')
             tts.save("askme/assets/good.mp3")
             fname = "askme/assets/good.mp3"

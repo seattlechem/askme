@@ -1,14 +1,20 @@
+ansible==2.5.3
 appnope==0.1.0
 asn1crypto==0.24.0
 astroid==1.6.3
 backcall==0.1.0
 bcrypt==3.1.4
+certifi==2018.4.16
 cffi==1.11.5
+chardet==3.0.4
+coverage==4.5.1
 cryptography==2.2.2
 decorator==4.3.0
 Django==2.0.5
 djangorestframework==3.8.2
 google-api-python-client==1.6.4
+gTTS==1.2.2
+gTTS-token==1.1.1
 httplib2==0.10.3
 idna==2.6
 ipython==6.4.0
@@ -34,6 +40,7 @@ pylint==1.8.4
 PyNaCl==1.2.1
 pytz==2018.4
 PyYAML==3.12
+requests==2.18.4
 rsa==3.4.2
 simplegeneric==0.8.1
 six==1.11.0
@@ -41,7 +48,6 @@ SpeechRecognition==3.8.1
 tqdm==4.19.5
 traitlets==4.3.2
 uritemplate==3.0.0
+urllib3==1.22
 wcwidth==0.1.7
 wrapt==1.10.11
-gTTS==1.2.2
-gTTS-token==1.1.1

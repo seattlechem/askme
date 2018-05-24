@@ -11,9 +11,12 @@ omit =
     */__init__.py
     */manage.py
     */wsgi.py
+    */rectotext.py
+    */search.py
 
 source =
     askme
+    askme_api
 
 [report]
 show_missing = True
