@@ -57,7 +57,11 @@ def find(query):
         if arr[item] == '+':
             arr[item] = 'plus'
         if arr[item] == '-':
-            arr[item] == 'minus'
+            arr[item] = 'minus'
+        if arr[item] == '/':
+            arr[item] = 'divide'
+        if arr[item] == '*':
+            arr[item] = 'multiply'
 
     query = '+'.join(arr).strip(' ')
     print(query)

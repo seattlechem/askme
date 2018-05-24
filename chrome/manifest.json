@@ -1,13 +1,14 @@
 {
-  "name": "Anna personal helper",
+  "name": "Getting Started Example",
   "version": "1.0",
-  "description": "Virtual brain",
-  "permissions": ["activeTab", "declarativeContent", "storage"],
+  "description": "Build an Extension!",
+  "permissions": ["tabs", "tabCapture", "downloads", "storage"],
+  "options_page": "options.html",
   "background": {
-    "scripts": ["background.js", "main.js", "options.js", "popup.js"],
-    "persistent": true
+    "scripts": ["popup.js"],
+    "persistent": false
   },
-  "page_action": {
+  "browser_action": {
     "default_popup": "popup.html",
     "default_icon": {
       "16": "images/get_started16.png",
