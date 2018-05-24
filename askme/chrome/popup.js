@@ -1,8 +1,8 @@
 'use strict';
 
-window.onload=function(){
   console.log('sdfsdf');
-  document.getElementById('start').addEventListener('mousedown', function(){
+  let but = document.getElementById('start')
+  but.addEventListener('mousedown', function(){
     chrome.tabCapture.capture({audio: true}, (stream) => {
       let startTabId;
       chrome.tabs.query({active:true, currentWindow: true}, (tabs) => startTabId = tabs[0].id)
@@ -16,5 +16,3 @@ window.onload=function(){
   }).catch((err) => {
     console.log(err);
   })
-
-}
