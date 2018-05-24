@@ -9,7 +9,7 @@ Environment=SECRET_KEY={{ secret_key }}
 Environment=DB_USER={{ db_user }}
 Environment=DB_PASSWORD={{ db_password }}
 Environment=DB_HOST={{ db_host }}
-Environment=ALLOWED_HOSTS={{ server_dns }} {{ allowed_hosts }} localhost
+Environment=ALLOWED_HOSTS={{ server_dns }}|{{ allowed_hosts }}|localhost
 
 User=ubuntu
 Group=www-data
