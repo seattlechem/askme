@@ -1,5 +1,6 @@
 from rest_framework.test import APITestCase
 import json
+from django.http import HttpResponse
 
 
 class ApiTest(APITestCase):
@@ -9,6 +10,7 @@ class ApiTest(APITestCase):
         self.assertEquals(json.loads(response.content), {"answer": "Sorry we have some connection problems. I didn\'t catch your request"})
 
     def test_audio_post_request(self):
-        import pdb; pdb.set_trace()
         response = self.client.post('/api/v1/audio/')
-        self.assertEquals(response.status_code, 302)
+        self.assertEquals(response['Content-Type'], 'audio/mp3')
+        self.assertNotEqual(len(response['Content-Length']), 0)
+        self.assertEquals(response.status_code, 200)

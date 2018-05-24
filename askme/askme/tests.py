@@ -19,3 +19,8 @@ class RouteTests(TestCase):
         """Audio route test."""
         response = self.client.get('/audio')
         self.assertEqual(response.status_code, 200)
+
+    def test_save_view(self):
+        response = self.client.post('/audio')
+        self.assertEquals(response['Content-Type'], 'audio/mp3')
+        self.assertNotEqual(len(response['Content-Length']), 0)
