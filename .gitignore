@@ -306,5 +306,7 @@ venv.bak/
 #ansible
 hosts
 
+askme/askme_api/assets/*
+!askme/askme_api/assets/.gitkeep
 
 # End of https://www.gitignore.io/api/code,macos,python,django
