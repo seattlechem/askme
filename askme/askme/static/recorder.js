@@ -79,7 +79,7 @@ function stoprecord(){
     fd.append('fname', 'audio.wav');
     fd.append('data', blob);
     var xhr = new XMLHttpRequest();
-    xhr.open('POST', 'http://ec2-35-173-244-184.compute-1.amazonaws.com/audio', true);
+    xhr.open('POST', '/audio', true);
     console.log(xhr);
     xhr.responseType = 'blob';
     console.log('begin to send');
