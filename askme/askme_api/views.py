@@ -4,44 +4,61 @@ from rest_framework.response import Response
 from .rectotext import rec_to_text
 from .search import find
 from django.http import HttpResponse
+from django.views.decorators.csrf import csrf_exempt
+from django.utils.decorators import method_decorator
 from gtts import gTTS
 import os
 
+@method_decorator(csrf_exempt, name='dispatch')
 class AskViewApi(APIView):
     """Using apiview."""
 
     def post(self, request):
         """Upload audio file."""
-        uploadedFile = open("askme_api/assets/file.wav", "wb")
-        # import pdb; pdb.set_trace()
-        f = request.FILES['file']
-        uploadedFile.write(f.read())
-        uploadedFile.close()
-        question = rec_to_text()
-        answer = find(question)
-        import pdb; pdb.set_trace()
-        return {'answer': answer}
+        try:
+            f = request.FILES['file']
+            uploadedFile = open("askme_api/assets/file.wav", "wb")
+            uploadedFile.write(f.read())
+            uploadedFile.close()
+            question = rec_to_text()
+            answer = find(question)
+            return {'answer': answer}
+        except KeyError:
+            answer = "Sorry we have some connection problems. I didn't catch your request"
+            return {'answer': answer}
 
 
+@method_decorator(csrf_exempt, name='dispatch')
 class AudioViewApi(APIView):
     """Using apiview."""
 
     def post(self, request):
         """Upload audio file."""
-        uploadedFile = open("askme/assets/file.wav", "wb")
-        f = request.FILES['data']
-        uploadedFile.write(f.read())
-        uploadedFile.close()
-        question = rec_to_text()
-        answer = find(question)
-        tts = gTTS(text=answer, lang='en')
-        tts.save("askme/assets/good.mp3")
-        # os.system("mpg321 good.mp3")
-        fname = "askme/assets/good.mp3"
-        f = open(fname, "rb") 
-        response = HttpResponse()
-        response.write(f.read())
-        response['Content-Type'] = 'audio/mp3'
-        response['Content-Length'] = os.path.getsize(fname)
-        return response
+        try:
+            uploadedFile = open("askme/assets/file.wav", "wb")
+            f = request.FILES['data']
+            uploadedFile.write(f.read())
+            uploadedFile.close()
+            question = rec_to_text()
+            answer = find(question)
+            tts = gTTS(text=answer, lang='en')
+            tts.save("askme/assets/good.mp3")
+            fname = "askme/assets/good.mp3"
+            f = open(fname, "rb") 
+            response = HttpResponse()
+            response.write(f.read())
+            response['Content-Type'] = 'audio/mp3'
+            response['Content-Length'] = os.path.getsize(fname)
+            return response
+        except KeyError:
+            answer = 'I am sorry. We have some connection issue. I couldn\'t get get Your file'
+            tts = gTTS(text=answer, lang='en')
+            tts.save("askme/assets/good.mp3")
+            fname = "askme/assets/good.mp3"
+            f = open(fname, "rb") 
+            response = HttpResponse()
+            response.write(f.read())
+            response['Content-Type'] = 'audio/mp3'
+            response['Content-Length'] = os.path.getsize(fname)
+
 
