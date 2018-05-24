@@ -16,8 +16,8 @@ install:
   - pip install coveralls
 
 script:
-  - python mercedes/manage.py migrate
-  - coverage run mercedes/manage.py test mercedes
+  - python askme/manage.py migrate
+  - coverage run askme/manage.py test askme
 
 after_success:
   - coveralls
