@@ -16,7 +16,7 @@ Including another URLconf
 from django.urls import path, include
 # from django.conf.urls import static
 from django.conf import settings
-from .views import home_view, save_view
+from .views import home_view, save_view, about_us_view
 from django.contrib import admin
 from django.urls import path, include
 from django.conf.urls.static import static
@@ -26,6 +26,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/v1/', include('askme_api.urls')),
     path('', home_view, name='home'),
+    path('aboutus', about_us_view, name='about_us'),
     path('audio', save_view, name='save'),
 ]
 
