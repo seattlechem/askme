@@ -13,13 +13,11 @@ class AskViewApi(APIView):
     def post(self, request):
         """Upload audio file."""
         uploadedFile = open("askme_api/assets/file.wav", "wb")
-        # import pdb; pdb.set_trace()
         f = request.FILES['file']
         uploadedFile.write(f.read())
         uploadedFile.close()
         question = rec_to_text()
         answer = find(question)
-        import pdb; pdb.set_trace()
         return {'answer': answer}
 
 
@@ -36,7 +34,6 @@ class AudioViewApi(APIView):
         answer = find(question)
         tts = gTTS(text=answer, lang='en')
         tts.save("askme/assets/good.mp3")
-        # os.system("mpg321 good.mp3")
         fname = "askme/assets/good.mp3"
         f = open(fname, "rb") 
         response = HttpResponse()
