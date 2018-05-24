@@ -41,25 +41,16 @@ class AudioViewApi(APIView):
             uploadedFile.close()
             question = rec_to_text()
             answer = find(question)
-            tts = gTTS(text=answer, lang='en')
-            tts.save("askme/assets/good.mp3")
-            fname = "askme/assets/good.mp3"
-            f = open(fname, "rb") 
-            response = HttpResponse()
-            response.write(f.read())
-            response['Content-Type'] = 'audio/mp3'
-            response['Content-Length'] = os.path.getsize(fname)
-            return response
         except KeyError:
             answer = 'I am sorry. We have some connection issue.\
             I couldn\'t get get Your file'
-            tts = gTTS(text=answer, lang='en')
-            tts.save("askme/assets/good.mp3")
-            fname = "askme/assets/good.mp3"
-            f = open(fname, "rb") 
-            response = HttpResponse()
-            response.write(f.read())
-            response['Content-Type'] = 'audio/mp3'
-            response['Content-Length'] = os.path.getsize(fname)
 
-
+        tts = gTTS(text=answer, lang='en')
+        tts.save("askme/assets/good.mp3")
+        fname = "askme/assets/good.mp3"
+        f = open(fname, "rb") 
+        response = HttpResponse()
+        response.write(f.read())
+        response['Content-Type'] = 'audio/mp3'
+        response['Content-Length'] = os.path.getsize(fname)
+        return response
