@@ -13,7 +13,7 @@ omit =
     */wsgi.py
 
 source =
-    <imagersite>
+    askme
 
 [report]
 show_missing = True
