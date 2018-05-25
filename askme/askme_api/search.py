@@ -46,7 +46,6 @@ def find(query):
         return speech_output
     # print(query)
     arr = query.split(' ')
-    # print(arr)
 
     for item in range(len(arr)):
         try:
@@ -64,6 +63,7 @@ def find(query):
             arr[item] = 'multiply'
 
     query = '+'.join(arr).strip(' ')
+    query.replace(' ', '+')
     print(query)
                 
     url = 'http://api.wolframalpha.com/v1/spoken?i=' + query + '&appid=' + appid
