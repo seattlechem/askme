@@ -1,0 +1,219 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+		<meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Audio Recorder</title>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="{% static "recorder.js" %}"></script>
+    <script src="{% static "swiper.js" %}"></script>
+    <style>
+      #text{
+        width:60%;
+        margin:auto;
+        display: block;
+      }
+      h1 {
+        margin-top: 40px;
+      }
+      #one-persin{
+        display: inline-block;
+        margin: 50px;
+      }
+      #persons {
+        margin: auto;
+        width: 60%;
+      }
+      #persons div {
+        border: 3px solid #ccc;
+        border-radius: 10px;
+      }
+      html, body {
+        width:  100%;
+        height: 100%;
+        margin: 0px;
+        background-color: black;
+        color: aliceblue;
+      }
+      canvas {
+          border: 3px solid #ccc;
+          border-radius: 10px;
+          display: inline;
+
+      }
+      #help {
+        position: absolute;
+          top: 5px;
+          left: 5px;
+        z-index: 1;
+        font-size: 20px;
+        font-family: Arial, sans-serif;
+      }
+      #logout {
+        position: absolute;
+          top: 5px;
+          right: 5px;
+        z-index: 1;
+        font-size: 25px;
+      }
+      a:link {
+          color: #C0C0C0;
+        text-decoration: none;
+      }
+  
+      a:visited {
+          color: #C0C0C0;
+        text-decoration: none;
+      }
+  
+      a:hover {
+          color: #FFFFFF;
+        text-decoration: none;
+      }
+  
+      a:active {
+          color: #C0C0C0;
+        text-decoration: none;
+      }
+      #canvas {
+        width: 80%;
+        display: block;
+        margin: auto;
+      }
+      #single-one {
+        width: 58%;
+        display: block;
+        margin: auto;
+      }
+      </style>
+    </head>
+    <body>
+      <div id="persons">
+        <h1>Meet The Team</h1>
+        <ul>
+          <li id="one-persin">
+          <h2>Andrii Glukhyi</h2>
+          <ul>
+            <li>
+              <a href="https://github.com/andriiglukhyi">Github</a>
+            </li>
+            <li>
+              <a href="https://www.linkedin.com/in/andrii-glukhyi-961b17156/">LinkedIn</a>
+            </li>
+          </ul>
+          <img src="https://media.licdn.com/dms/image/C5603AQE6w5yjgeHNtA/profile-displayphoto-shrink_200_200/0?e=1532563200&v=beta&t=43GHR46KLU2GJmvSo3nLQyPtC_Ch5Sn4mtysrEJiqfU" alt="">
+          </li>
+          <li id="one-persin">
+            <h2>Peter Kim</h2>
+            <ul>
+              <li>
+                <a href="https://github.com/seattlechem">Github</a>
+              </li>
+              <li>
+                <a href="">LinkedIn</a>
+              </li>
+            </ul>
+            <img src="http://via.placeholder.com/200x200" alt="">
+          </li>
+          <li id="one-persin">
+            <h2>Ramon Mendoza</h2>
+            <ul>
+              <li>
+                <a href="https://github.com/brickfaced">Github</a>
+              </li>
+              <li>
+                <a href="https://www.linkedin.com/in/ramon-mendoza/">LinkedIn</a>
+              </li>
+            </ul>
+            <img src="http://via.placeholder.com/200x200" alt="">
+          </li>
+          </ul>
+    </div>
+
+      <div id="text">
+          <h1>Personal assistant Anna</h1>
+          <p>This is a browser based virtual assistant Anna</p>
+        <p> The interface is fairly simple, a coloured circle on the centre of the page indicates the state, a key to these colors is given below.<br>
+
+          Once the page has loaded and you see a white circle it is ready to use, you click (or touch) the circle and hold down then speak your command eg "What time is it in London" then release. Alexa will process you command and then reply to you in speech when the circle is green. If you see a brief red circle there was an error, try your request again. If Alexa doesn't understand the request she will say so.</p>
+          
+        <div id="canvas">
+        <canvas id="white"></canvas>
+        <canvas id="cyan"></canvas></canvas>
+        <canvas id="blue"></canvas>
+        <canvas id="#00ff00"></canvas>
+        <div id="single-one">
+          <canvas id="red"></canvas>
+        </div>
+        </div>
+        <div id='help' class="notSelectable">
+          <a href="/">Back</a>
+        </div>
+      </div>
+        <script>
+        
+        
+        function draw(col, text){
+          var c=document.getElementById(col);
+          var ctx=c.getContext("2d");
+          var circle = new Path2D();
+          ctx.canvas.width  = 360;
+          ctx.canvas.height = 240;
+          var x = c.width / 2;
+          var y = c.height / 2;
+          var radius = Math.min(c.width, c.height) / 4;
+          circle.arc(x, y, radius, 0, 2 * Math.PI);
+          ctx.lineWidth = 15;
+          ctx.rect(0, 0, c.width, c.height);
+          ctx.fill();
+          ctx.shadowOffsetX = 0;
+          ctx.shadowOffsetY = 0;
+          ctx.shadowBlur = 10;
+          ctx.shadowColor = col;//'#ffffee';
+          ctx.clearRect(0, 0, c.width, c.height);
+          ctx.fill();
+          ctx.strokeStyle = col;
+          ctx.stroke(circle);
+          ctx.textAlign = 'center';
+          ctx.fillStyle = col;
+          ctx.font = "20px sans-serif";
+          ctx.fillText(text, 180, 230);
+        }
+          
+    
+    
+        
+        $(document).ready(function(){
+          draw('white', 'Ready');
+          draw('cyan', 'Listening');
+          draw('blue', 'Processing');
+          draw('#00ff00', 'Speaking');
+          draw('red', 'Error');
+    
+           $('.notSelectable').disableSelection();
+        
+        });
+    
+        // This jQuery Plugin will disable text selection for Android and iOS devices.
+        // Stackoverflow Answer: http://stackoverflow.com/a/2723677/1195891
+        $.fn.extend({
+            disableSelection: function() {
+                this.each(function() {
+                    this.onselectstart = function() {
+                        return false;
+                    };
+                    this.unselectable = "on";
+                    $(this).css('-moz-user-select', 'none');
+                    $(this).css('-webkit-user-select', 'none');
+                });
+            }
+        });
+      
+      
+        
+        
+        </script>
+      </body>
+    </HTML>
+      

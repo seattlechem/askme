@@ -47,3 +47,11 @@ def save_view(request):
         response['Content-Length'] = os.path.getsize(fname)
         return response
 
+def help_view(request):
+    """
+    The home_view function opens the recorded file in the file structure
+    and writes it as the request.body and then the audio gets set as text
+    and answered by the find() method
+    """
+    return render(request, 'generic/help.html')
+

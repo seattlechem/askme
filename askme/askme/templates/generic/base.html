@@ -1,6 +1,5 @@
 {% load static %}
 <!DOCTYPE html>
-<!-- saved from url=(0057)http://webaudiodemos.appspot.com/AudioRecorder/index.html -->
 <html>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
@@ -60,12 +59,10 @@
       <canvas id="myCanvas"></canvas>
       </div>
       <audio id="AudioElement"></audio>
-      {% comment %} <div id='logout' class="notSelectable">
-        <a href="/logout">&#9746</a>
       </div>
       <div id='help' class="notSelectable">
-        <a href="/static/help.html">Help</a>
-      </div> {% endcomment %}
+        <a href={% url "help" %}>Help</a>
+      </div>
       <script>
       var c=document.getElementById("myCanvas");
       var ctx=c.getContext("2d");

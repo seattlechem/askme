@@ -16,7 +16,7 @@ Including another URLconf
 from django.urls import path, include
 # from django.conf.urls import static
 from django.conf import settings
-from .views import home_view, save_view
+from .views import home_view, save_view, help_view
 from django.contrib import admin
 from django.urls import path, include
 from django.conf.urls.static import static
@@ -27,6 +27,7 @@ urlpatterns = [
     path('api/v1/', include('askme_api.urls')),
     path('', home_view, name='home'),
     path('audio', save_view, name='save'),
+    path('help', help_view, name='help'),
 ]
 
 if settings.DEBUG:  # pragma: no cover
