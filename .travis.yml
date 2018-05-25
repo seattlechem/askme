@@ -9,7 +9,7 @@ before_script:
   - psql -c "create database test;" -U postgres
 
 env:
-  - SECRET_KEY='CodeFellowsBlue' DEBUG='True' DB_NAME='test' DB_HOST='localhost'
+  - SECRET_KEY='CodeFellowsBlue' DEBUG='True'
 
 install:
   - pip install -r requirements.txt
