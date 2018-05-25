@@ -11,6 +11,10 @@
 
 ## API
 <!-- Provide detailed instructions for your applications usage. This should include any methods or endpoints available to the user/client/developer. Each section should be formatted to provide clear syntax for usage, example calls including input data requirements and options, and example responses or return values. -->
+- Wolfram Alpha
+Accepts questions as queries and responds with answers as text.
+- Google Speech API
+Used to translate Wolfram Alpha answers into a speech to give that feeling of conversation to our user.
 
 ## Change Log
 <!-- Use this are to document the iterative changes made to your application as each feature is successfully implemented. Use time stamps. Here's an example:
