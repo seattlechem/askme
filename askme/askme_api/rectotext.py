@@ -9,12 +9,12 @@ def rec_to_text():
 
     r = sr.Recognizer()
 
-    name = 'askme_api/assets/file.wav'
+    name = os.path.join(BASE_DIR, 'askme_api/assets/file.wav')
     # Load audio file
     with sr.AudioFile(name) as source:
         audio = r.record(source)
     # Transcribe audio file
     text = r.recognize_google_cloud(audio, credentials_json=GOOGLE_CLOUD_SPEECH_CREDENTIALS)
-    with open(os.path.join(BASE_DIR, "askme_api/assets/transcript.txt", "w")) as f:
+    with open(os.path.join(BASE_DIR, "askme_api/assets/transcript.txt"), "w") as f:
         f.write(text)
     return text
