@@ -13,15 +13,21 @@ function swipedetect(el, callback){
     elapsedTime,
     startTime,
     handleswipe = callback || function(swipedir){}
-  touchsurface.addEventListener('touchstart mousedown', function(e){
-    var touchobj = e.changedTouches[0]
-    swipedir = 'none'
-    dist = 0
-    startX = touchobj.pageX
-    startY = touchobj.pageY
-    startTime = new Date().getTime() // record time when finger first makes contact with surface
-    e.preventDefault()
-}, false)
+
+    scottWasHere =  function(e){
+      var touchobj = e.changedTouches[0]
+      swipedir = 'none'
+      dist = 0
+      startX = touchobj.pageX
+      startY = touchobj.pageY
+      startTime = new Date().getTime() // record time when finger first makes contact with surface
+      e.preventDefault()
+  }
+
+
+  touchsurface.addEventListener('touchstart',scottWasHere, false)
+  touchsurface.addEventListener('mousedown',scottWasHere, false)
+
   touchsurface.addEventListener('touchmove mouseup', function(e){
     e.preventDefault() // prevent scrolling when inside DIV
 }, false)
