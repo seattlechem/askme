@@ -4,41 +4,44 @@
 
 'use strict';
 
-function mouseDown(){
-  console.log('yes')
-  chrome.tabCapture.capture({audio: true}, (stream) => {
-    let startTabId;
-    chrome.tabs.query({active:true, currentWindow: true}, (tabs) => startTabId = tabs[0].id)
-    const liveStream = stream;
-    const audioCtx = new AudioContext();
-    const source = audioCtx.createMediaStreamSource(stream);
-    let mediaRecorder = new Recorder(source);
-  })
-}
+var start = document.getElementById('start');
 
-function mouseUp(){
-  console.log('stop')
-  const stopCapture = function() {
-    let endTabId;
-    chrome.tabs.query({active: true, currentWindow: true}, (tabs) => {
-      endTabId = tabs[0].id;
-      if(mediaRecorder && startTabId === endTabId){
-        mediaRecorder.stop();
-        mediaRecorder.exportWAV((blob)=> {
-          const audioURL = window.URL.createObjectURL(blob);
-          const now = new Date(Date.now());
-          const currentDate = now.toDateString();
-          chrome.downloads.download({url: audioURL, filename: `${currentDate.replace(/\s/g, "-")} Capture`})
-        })
-      }});
-    chrome.storage.sync.get({
-      muteTab: false
-    }, (options) => {
-      if(!options.muteTab) {
-        let audio = new Audio();
-        audio.srcObject = liveStream;
-        audio.play();
-      }
+start.onclick = function(){
+  const recordAudio = () =>
+  new Promise(async resolve => {
+    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+    const mediaRecorder = new MediaRecorder(stream);
+    const audioChunks = [];
+
+    mediaRecorder.addEventListener("dataavailable", event => {
+      audioChunks.push(event.data);
     });
-  };
+
+    const start = () => mediaRecorder.start();
+
+    const stop = () =>
+      new Promise(resolve => {
+        mediaRecorder.addEventListener("stop", () => {
+          const audioBlob = new Blob(audioChunks);
+          const audioUrl = URL.createObjectURL(audioBlob);
+          const audio = new Audio(audioUrl);
+          const play = () => audio.play();
+          resolve({ audioBlob, audioUrl, play });
+        });
+
+        mediaRecorder.stop();
+      });
+
+    resolve({ start, stop });
+  });
+
+const sleep = time => new Promise(resolve => setTimeout(resolve, time));
+
+(async () => {
+  const recorder = await recordAudio();
+  recorder.start();
+  await sleep(3000);
+  const audio = await recorder.stop();
+  audio.play();
+})();
 }
