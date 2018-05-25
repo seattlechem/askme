@@ -8,6 +8,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.utils.decorators import method_decorator
 from gtts import gTTS
 import os
+from askme.settings import BASE_DIR
 
 @method_decorator(csrf_exempt, name='dispatch')
 class AskViewApi(APIView):
@@ -17,7 +18,7 @@ class AskViewApi(APIView):
         """Upload audio file."""
         try:
             f = request.FILES['file']
-            uploadedFile = open("askme_api/assets/file.wav", "wb")
+            uploadedFile = open(os.path.join(BASE_DIR, "askme_api/assets/file.wav", "wb"))
             uploadedFile.write(f.read())
             uploadedFile.close()
             question = rec_to_text()
@@ -35,19 +36,19 @@ class AudioViewApi(APIView):
     def post(self, request):
         """Upload audio file."""
         try:
-            uploadedFile = open("askme/assets/file.wav", "wb")
+            uploadedFile = open(os.path.join(BASE_DIR, 'askme/assets/file.wav'), 'wb')
             f = request.FILES['data']
             uploadedFile.write(f.read())
             uploadedFile.close()
             question = rec_to_text()
             answer = find(question)
         except KeyError:
-            answer = 'I am sorry. We have some connection issue.\
-            I couldn\'t get get Your file'
+            answer = 'I am sorry. We have some connection issues.\
+I couldn\'t get get Your file'
 
         tts = gTTS(text=answer, lang='en')
-        tts.save("askme/assets/good.mp3")
-        fname = "askme/assets/good.mp3"
+        fname = os.path.join(BASE_DIR, "askme/assets/good.mp3")
+        tts.save(fname)
         f = open(fname, "rb") 
         response = HttpResponse()
         response.write(f.read())

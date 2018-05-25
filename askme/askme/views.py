@@ -29,18 +29,18 @@ def save_view(request):
     """When sound file is available read file and sends it to google api."""
     try:
         f = request.FILES['data']
-        uploadedFile = open(os.path.join(BASE_DIR, "askme/assets/file.wav", "wb"))
+        uploadedFile = open(os.path.join(BASE_DIR, "askme/assets/file.wav"), "wb")
         uploadedFile.write(f.read())
         uploadedFile.close()
         question = rec_to_text()
         answer = find(question)
     except KeyError:
         answer = "I'm sorry I have some connection Issue. \
-        Can You repeat your question?"
+Can You repeat your question?"
 
     tts = gTTS(text=answer, lang='en')
-    tts.save(os.path.join(BASE_DIR, "askme/assets/good.mp3"))
-    fname = "askme/assets/good.mp3"
+    fname = os.path.join(BASE_DIR, "askme/assets/good.mp3")
+    tts.save(fname)
     f = open(fname, "rb") 
     response = HttpResponse()
     response.write(f.read())

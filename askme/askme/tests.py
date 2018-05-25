@@ -24,4 +24,3 @@ class RouteTests(TestCase):
         response = self.client.post('/audio')
         self.assertEquals(response['Content-Type'], 'audio/mp3')
         self.assertNotEqual(len(response['Content-Length']), 0)
-        self.assertRaises(KeyError, response)
