@@ -25,7 +25,7 @@ Used to translate Wolfram Alpha answers into a speech to give that feeling of co
 | Date | |
 |:--|:--|
 | 5-25-2018 | Final Presentation |
-| 5-24-2018 | Stuff |
+| 5-24-2018 | Testing complete |
 | 5-23-2018 | Stuff |
 | 5-22-2018 | Initial setup, install Django, complete rest api |
 
