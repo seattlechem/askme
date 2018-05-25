@@ -6,6 +6,7 @@ from askme_api.search import find
 from django.views.decorators.csrf import csrf_exempt
 from gtts import gTTS
 import os
+from askme.settings import BASE_DIR
 
 
 def home_view(request):
@@ -28,7 +29,7 @@ def save_view(request):
     """When sound file is available read file and sends it to google api."""
     try:
         f = request.FILES['data']
-        uploadedFile = open("askme/assets/file.wav", "wb")
+        uploadedFile = open(os.path.join(BASE_DIR, "askme/assets/file.wav", "wb"))
         uploadedFile.write(f.read())
         uploadedFile.close()
         question = rec_to_text()
@@ -38,7 +39,7 @@ def save_view(request):
         Can You repeat your question?"
 
     tts = gTTS(text=answer, lang='en')
-    tts.save("askme/assets/good.mp3")
+    tts.save(os.path.join(BASE_DIR, "askme/assets/good.mp3"))
     fname = "askme/assets/good.mp3"
     f = open(fname, "rb") 
     response = HttpResponse()

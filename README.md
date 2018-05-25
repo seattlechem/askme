@@ -32,3 +32,5 @@
 - github.com/pygame/pygame
 - github.com/jrief/django-sass-processor
 - github.com/voxy/django-audio-recorder
+
+![](assets/data_flow.jpeg)
